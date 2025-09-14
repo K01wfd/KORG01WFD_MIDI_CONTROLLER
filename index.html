@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Korg 01/wfd Controller</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <div class="screen-1">
+        <!-- Display section -->
+        <div class="screen">
+          <!-- <div id="mode-data-port">Initial</div> -->
+          <!-- <div id="bank-data-port">Initial</div> -->
+          <div id="patchname-data-port">Initial</div>
+        </div>
+
+        <!-- Change mode & banks section -->
+        <h2>Change Mode & Transpose</h2>
+        <div class="actions">
+          <div class="change-mode-buttons">
+            <button id="mode-combination">Combi</button>
+            <button id="mode-program">Prog</button>
+            <button id="request-global">Reset</button>
+          </div>
+
+          <div class="transpose-buttons">
+            <button id="transpose-minus">-</button>
+            <div id="transpose-value">0</div>
+            <button id="transpose-plus">+</button>
+          </div>
+        </div>
+        <h2>Change Banks</h2>
+        <div class="change-banks-buttons">
+          <button id="bank-a-btn" value="A">Bank A</button>
+          <button id="bank-b-btn" value="B">Bank B</button>
+        </div>
+        <h2>User Scale</h2>
+        <div class="userscale">
+          <div class="userscale-top">
+            <div class="userscale-top-left">
+              <button data-index="1" data-id="firstPortion">C#</button>
+              <button data-index="3" data-id="firstPortion">D#</button>
+            </div>
+            <div class="userscale-top-right">
+              <button data-index="6" data-id="firstPortion">F#</button>
+              <button data-index="1" data-id="secondPortion">G#</button>
+              <button data-index="3" data-id="secondPortion">A#</button>
+            </div>
+          </div>
+          <div class="userscale-bottom">
+            <button data-index="0" data-id="firstPortion">C</button>
+            <button data-index="2" data-id="firstPortion">D</button>
+            <button data-index="4" data-id="firstPortion">E</button>
+            <button data-index="5" data-id="firstPortion">F</button>
+            <button data-index="0" data-id="secondPortion">G</button>
+            <button data-index="2" data-id="secondPortion">A</button>
+            <button data-index="4" data-id="secondPortion">B</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="utils/utils.js"></script>
+
+    <script src="/state/appstate.js"></script>
+    <script src="midi.js"></script>
+    <script src="/handler/incomingMsgHandler.js"></script>
+    <script src="/proccessor/proccessData.js"></script>
+
+    <script src="data/messages.js"></script>
+    <script src="display.js"></script>
+    <script src="uiUpdater.js"></script>
+  </body>
+</html>

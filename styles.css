@@ -1,0 +1,116 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: monospace;
+  font-size: 1.6rem;
+  user-select: none;
+  min-height: 100dvh;
+  background-color: #121212;
+  color: #ddd;
+}
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  padding: 1.2rem 0;
+}
+button {
+  background-color: transparent;
+  border: none;
+  border-radius: 0.4rem;
+  color: #ddd;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 0.8rem 1.2rem;
+}
+.screen {
+  color: #121212;
+  min-height: 15dvh;
+  background-color: #dc8f00;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 1rem;
+  font-weight: 500;
+  div:last-of-type {
+    background-color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.9rem;
+    font-weight: 600;
+  }
+}
+
+/*  */
+.actions {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+}
+.change-mode-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.transpose-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/*  */
+.change-banks-buttons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/*  */
+
+.userscale {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1.5rem;
+  button {
+    font-size: 2.5rem;
+  }
+}
+.userscale-top {
+  display: flex;
+  gap: 4rem;
+}
+.userscale-top-left,
+.userscale-top-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.userscale-bottom {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  button {
+    padding: 1rem 1.6rem;
+  }
+}
+/*  */
+.active-btn {
+  outline: 1px solid #edc500;
+  box-shadow: 0 0 2rem #edc500;
+  outline-offset: 0.5rem;
+}
