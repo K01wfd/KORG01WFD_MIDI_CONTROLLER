@@ -43,6 +43,9 @@ class MIDIConnector extends EventTarget {
       alert('Error sending message');
     }
   }
+  changePatch(patchNumber, channel = 0) {
+    this.#_output.send([0xc0 | channel, patchNumber]);
+  }
   changeBank(bank, channel = 0) {
     if (!this.#_output) return;
 

@@ -1,7 +1,7 @@
 // const modeDataPort = document.getElementById('mode-data-port');
 // const bankDataPort = document.getElementById('bank-data-port');
 const patchnameDataPort = document.getElementById('patchname-data-port');
-
+const showNumPadd = document.getElementById('show-number-padd');
 // -----------------------------------------------------------------------
 const modeProgButton = document.getElementById('mode-program');
 const modeCombiButton = document.getElementById('mode-combination');
@@ -23,8 +23,18 @@ const scaleNotesBtns = userScaleContainer.querySelectorAll('button');
 
 // ----------------------------------------------------------------------
 
+const patchButtonsContainer = document.querySelector('.change-patch-buttons');
+
 let currentTransposeValue = +traValue.textContent;
 
+showNumPadd.addEventListener('click', (_) => {
+  console.log(patchButtonsContainer.style.getPropertyValue('display'));
+  if (patchButtonsContainer.style.getPropertyValue('display') === 'none') {
+    patchButtonsContainer.style.display = 'flex';
+    return;
+  }
+  patchButtonsContainer.style.display = 'none';
+});
 midi.addEventListener('connectorReady', () => {
   midi.sendMessage(requestModeMessage);
   delayedMessage(globalDumpRequest);
@@ -152,6 +162,39 @@ bankBbtn.addEventListener('click', (_) => {
   state.activeBank = bankBbtn.value;
   midi.changeBank(bankNumber);
   dispatchNewEvent('bankChangedOnApp', midi, state);
+});
+
+// ----------------------------------------------------------------------
+// Change Patch
+let numOfClicks = 0;
+let clickedNumber = '';
+const changePatchButtons = patchButtonsContainer.querySelectorAll('button');
+changePatchButtons.forEach((btn) => {
+  btn.addEventListener('click', (_) => {
+    btn.classList.add('active-patch-btn');
+    numOfClicks++;
+    const btnValue = +btn.value;
+    clickedNumber += btnValue;
+    if (+clickedNumber > 99) {
+      changePatchButtons.forEach((btn) =>
+        btn.classList.remove('active-patch-btn')
+      );
+      numOfClicks = 0;
+      return;
+    }
+    if (numOfClicks === 2) {
+      numOfClicks = 0;
+      changePatchButtons.forEach((btn) =>
+        btn.classList.remove('active-patch-btn')
+      );
+      midi.changePatch(+clickedNumber);
+      state.mode === 'PROGRAM'
+        ? (state.progModeData.patchNumber = +clickedNumber)
+        : (state.combiModeData.patchNumber = +clickedNumber);
+      clickedNumber = '';
+      dispatchNewEvent('patchCangedOnApp', midi, state);
+    }
+  });
 });
 const buttons = document.body.querySelectorAll('button');
 buttons.forEach((btn) => (btn.style.backgroundColor = genRandomColor()));

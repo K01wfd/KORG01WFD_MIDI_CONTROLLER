@@ -71,6 +71,16 @@ midi.addEventListener('bankChangedOnKeybardStateUpdated', (e) => {
   else toggleActiveButtons(bankBbtn, bankAbtn);
 });
 
+midi.addEventListener('patchCangedOnApp', (e) => {
+  const state = e.detail;
+  const { mode } = state;
+  if (mode === 'PROGRAM') {
+    midi.sendMessage(currProgRequest);
+  } else {
+    midi.sendMessage(currCombiRequest);
+  }
+});
+
 midi.addEventListener('globalDumpReceived', (e) => {
   const data = e.detail;
   globalDumpData = data;

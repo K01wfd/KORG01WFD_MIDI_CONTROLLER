@@ -14,6 +14,7 @@
           <!-- <div id="mode-data-port">Initial</div> -->
           <!-- <div id="bank-data-port">Initial</div> -->
           <div id="patchname-data-port">Initial</div>
+          <button id="show-number-padd">Num Pad</button>
         </div>
 
         <!-- Change mode & banks section -->
@@ -24,19 +25,20 @@
             <button id="mode-program">Prog</button>
             <button id="request-global">Reset</button>
           </div>
-
           <div class="transpose-buttons">
             <button id="transpose-minus">-</button>
             <div id="transpose-value">0</div>
             <button id="transpose-plus">+</button>
           </div>
         </div>
+        <!--  -->
         <h2>Change Banks</h2>
         <div class="change-banks-buttons">
           <button id="bank-a-btn" value="A">Bank A</button>
           <button id="bank-b-btn" value="B">Bank B</button>
         </div>
-        <h2>User Scale</h2>
+        <!--  -->
+        <h2>UserScale</h2>
         <div class="userscale">
           <div class="userscale-top">
             <div class="userscale-top-left">
@@ -57,6 +59,27 @@
             <button data-index="0" data-id="secondPortion">G</button>
             <button data-index="2" data-id="secondPortion">A</button>
             <button data-index="4" data-id="secondPortion">B</button>
+          </div>
+        </div>
+        <!--  -->
+        <div class="change-patch-buttons" style="display: none">
+          <div class="row">
+            <button value="7">7</button>
+            <button value="8">8</button>
+            <button value="9">9</button>
+          </div>
+          <div class="row">
+            <button value="4">4</button>
+            <button value="5">5</button>
+            <button value="6">6</button>
+          </div>
+          <div class="row">
+            <button value="1">1</button>
+            <button value="2">2</button>
+            <button value="3">3</button>
+          </div>
+          <div class="row">
+            <button value="0">0</button>
           </div>
         </div>
       </div>

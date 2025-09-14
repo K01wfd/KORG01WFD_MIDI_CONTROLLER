@@ -4,11 +4,13 @@
  */
 function genRandomColor() {
   let minL = 30;
-  let maxL = 38;
+  let maxL = 35;
   let minS = 30; // avoid grayish colors
   let maxS = 100;
 
-  const hue = Math.floor(Math.random() * 360);
+  let hue = 0;
+  hue = Math.floor(Math.random() * 360);
+
   const saturation = Math.floor(Math.random() * (maxS - minS + 1)) + minS;
   const luminance = Math.floor(Math.random() * (maxL - minL + 1)) + minL;
 
