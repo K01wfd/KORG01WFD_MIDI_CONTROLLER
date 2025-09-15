@@ -4,4 +4,7 @@ const state = {
   progModeData: { patchNumber: 0, bank: 'A', patchName: 'Initial' },
   activeBank: 'A',
 };
+const zeroOneAppErrors = {
+  midiErrors: [],
+};
 // loadState('wfdState');

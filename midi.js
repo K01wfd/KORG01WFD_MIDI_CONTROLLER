@@ -40,6 +40,8 @@ class MIDIConnector extends EventTarget {
     try {
       this.#_output.send(message);
     } catch (error) {
+      zeroOneAppErrors.midiErrors.push(error);
+      saveState('midiErrors', zeroOneAppErrors);
       alert('Error sending message');
     }
   }

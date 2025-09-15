@@ -163,6 +163,7 @@ function removeActiveStyle(buttons) {
 function delayedMessage(message, timer = 50) {
   setTimeout(() => midi.sendMessage(message), timer);
 }
+
 // Prevent zoom on double touch
 document.addEventListener(
   'dblclick',
@@ -172,6 +173,11 @@ document.addEventListener(
   { passive: false }
 );
 
+/**
+ * Send delayed MIDI Message
+ * @param {number[]} dump - dump to parse patch name from
+ * @returns {string} str - the parsed Patch name
+ */
 function parsePatchName(dump) {
   const LOWER = Array.from({ length: 26 }, (_, i) =>
     String.fromCharCode(i + 97)
@@ -194,8 +200,8 @@ function parsePatchName(dump) {
   }
   return str;
 }
-function saveState(state) {
-  localStorage.setItem('wfdState', JSON.stringify(state));
+function saveState(name, state) {
+  localStorage.setItem(name, JSON.stringify(state));
 }
 function loadState(name) {
   const loadedState = JSON.parse(localStorage.getItem(name));

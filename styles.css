@@ -147,3 +147,6 @@ button {
   box-shadow: 0 0 2rem 1rem #edc500;
   outline-offset: 0.5rem;
 }
+.show-flex {
+  display: flex;
+}
