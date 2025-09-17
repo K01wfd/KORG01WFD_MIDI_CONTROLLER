@@ -13,6 +13,10 @@ midi.addEventListener('newMessage', (e) => {
       }
       break;
     }
+    case 0xc0: {
+      console.log(data);
+      break;
+    }
   }
   // sysEx
   switch (data[4]) {
@@ -54,8 +58,8 @@ midi.addEventListener('newMessage', (e) => {
       break;
     }
     default: {
-      // console.log('Unkown message');
-      // console.log(data);
+      console.log('Unkown message');
+      console.log(data);
       return;
     }
   }

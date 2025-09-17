@@ -42,7 +42,7 @@ class MIDIConnector extends EventTarget {
     } catch (error) {
       zeroOneAppErrors.midiErrors.push(error);
       saveState('midiErrors', zeroOneAppErrors);
-      alert('Error sending message');
+      alert('Error sending message ❗');
     }
   }
   changePatch(patchNumber, channel = 0) {

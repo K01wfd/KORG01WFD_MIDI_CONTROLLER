@@ -13,12 +13,15 @@
         <div class="screen">
           <!-- <div id="mode-data-port">Initial</div> -->
           <!-- <div id="bank-data-port">Initial</div> -->
-          <div id="patchname-data-port">Initial</div>
+          <div class="screen-patch-container">
+            <button id="previous-patch">&lt;&lt;&lt;</button>
+            <div id="patchname">Initial</div>
+            <button id="next-patch">&gt;&gt;&gt;</button>
+          </div>
           <button id="show-number-padd">Num Pad</button>
         </div>
 
         <!-- Change mode & banks section -->
-        <h2>Change Mode & Transpose</h2>
         <div class="actions">
           <div class="change-mode-buttons">
             <button id="mode-combination">Combi</button>
@@ -32,13 +35,11 @@
           </div>
         </div>
         <!--  -->
-        <h2>Change Banks</h2>
         <div class="change-banks-buttons">
           <button id="bank-a-btn" value="A">Bank A</button>
           <button id="bank-b-btn" value="B">Bank B</button>
         </div>
         <!--  -->
-        <h2>UserScale</h2>
         <div class="userscale">
           <div class="userscale-top">
             <div class="userscale-top-left">
@@ -83,6 +84,7 @@
           </div>
         </div>
       </div>
+      <div class="data-print-port"></div>
     </main>
     <script src="utils.js"></script>
 

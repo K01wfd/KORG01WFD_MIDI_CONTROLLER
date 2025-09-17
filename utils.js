@@ -218,3 +218,26 @@ const BANKS_NUMBERS = {
   A: 0,
   B: 1,
 };
+
+function printMIDIData(data, title, dataPort) {
+  const dataContainer = document.createElement('div');
+  dataContainer.classList.add('data-container');
+
+  const dataHeader = document.createElement('header');
+  dataHeader.classList.add('print-data-header');
+
+  const dataTitle = document.createElement('h3');
+  dataTitle.textContent = title;
+
+  const dateElement = document.createElement('span');
+  dateElement.textContent = new Date().toLocaleTimeString();
+
+  dataHeader.append(...[dataTitle, dateElement]);
+
+  const dataText = data.join('-');
+  const dataElement = document.createElement('p');
+  dataElement.textContent = dataText;
+
+  dataContainer.append(...[dataHeader, dataText]);
+  dataPort.appendChild(dataContainer);
+}

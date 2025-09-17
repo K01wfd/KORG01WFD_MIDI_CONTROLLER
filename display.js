@@ -1,6 +1,6 @@
 // const modeDataPort = document.getElementById('mode-data-port');
 // const bankDataPort = document.getElementById('bank-data-port');
-const patchnameDataPort = document.getElementById('patchname-data-port');
+const patchnameDataPort = document.getElementById('patchname');
 const showNumPadd = document.getElementById('show-number-padd');
 // -----------------------------------------------------------------------
 const modeProgButton = document.getElementById('mode-program');
@@ -23,6 +23,10 @@ const scaleNotesBtns = userScaleContainer.querySelectorAll('button');
 
 // ----------------------------------------------------------------------
 
+const prevPatchBtn = document.getElementById('previous-patch');
+const nextPatchBtn = document.getElementById('next-patch');
+
+const printDataPort = document.querySelector('.data-print-port');
 const patchButtonsContainer = document.querySelector('.change-patch-buttons');
 
 // Toggle numbers pad
@@ -266,9 +270,7 @@ changePatchButtons.forEach((btn) => {
        * depending on the current state mode, upadet each mode data in the state
        */
       midi.changePatch(+clickedNumber);
-      state.mode === 'PROGRAM'
-        ? (state.progModeData.patchNumber = +clickedNumber)
-        : (state.combiModeData.patchNumber = +clickedNumber);
+      state.patchNumber = +clickedNumber;
       clickedNumber = '';
 
       /**
@@ -277,6 +279,17 @@ changePatchButtons.forEach((btn) => {
       dispatchNewEvent('patchCangedOnApp', midi, state);
     }
   });
+});
+
+prevPatchBtn.addEventListener('click', (_) => {
+  patchNumberCounter--; // NEED TO CONVERT TO UNSIGNED HEX -1 === 127
+  midi.changePatch(patchNumberCounter);
+  dispatchNewEvent('patchCangedOnApp', midi, state);
+});
+nextPatchBtn.addEventListener('click', (_) => {
+  patchNumberCounter++;
+  midi.changePatch(patchNumberCounter);
+  dispatchNewEvent('patchCangedOnApp', midi, state);
 });
 
 /**

@@ -15,16 +15,5 @@ function proccessModeData(data) {
 }
 
 function processBankData(data) {
-  switch (state.mode) {
-    case 'COMBINATION': {
-      state.combiModeData.bank = BANKS[data[2]];
-      break;
-    }
-    case 'PROGRAM': {
-      state.progModeData.bank = BANKS[data[2]];
-      break;
-    }
-    default:
-      return;
-  }
+  state.activeBank = BANKS[data[2]];
 }

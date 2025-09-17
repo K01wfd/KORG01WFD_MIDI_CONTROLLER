@@ -28,7 +28,6 @@ midi.addEventListener('modeChangedOnKeybaordStateUpdated', (e) => {
     toggleActiveButtons(modeProgButton, modeCombiButton);
     midi.sendMessage(currProgRequest);
   }
-  console.log(globalDumpData);
 });
 
 /**
@@ -56,9 +55,6 @@ midi.addEventListener('modeRequestStateUpdated', (e) => {
  */
 midi.addEventListener('bankChangedOnKeybardStateUpdated', (e) => {
   const state = e.detail;
-  const { bank } =
-    state.mode === 'PROGRAM' ? state.progModeData : state.combiModeData;
-  state.activeBank = bank;
   if (state.activeBank === 'A') toggleActiveButtons(bankAbtn, bankBbtn);
   else toggleActiveButtons(bankBbtn, bankAbtn);
 });
@@ -87,16 +83,30 @@ midi.addEventListener('bankChangedOnApp', (e) => {
 
 midi.addEventListener('programDataReceived', (e) => {
   const data = e.detail;
-  const patchName = parsePatchName(data);
-  state.progModeData.patchName = patchName;
-  patchnameDataPort.textContent = state.progModeData.patchName;
+  const parsedPatchName = parsePatchName(data);
+  state.patchName = parsedPatchName;
+
+  // const newMap = [{ number: patchNumberCounter, name: parsedPatchName }];
+  // const prevProgPatchMap = JSON.parse(
+  //   localStorage.getItem('01wfdProgPatchesMap')
+  // );
+  // if (prevProgPatchMap) {
+  //   const extracted = [...prevProgPatchMap, ...newMap];
+  //   saveState('01wfdProgPatchesMap', extracted);
+  // } else {
+  //   saveState('01wfdProgPatchesMap', newMap);
+  // }
+
+  patchnameDataPort.textContent = `${state.activeBank}${state.patchNumber}: ${state.patchName}`;
+  printMIDIData(data, 'Program Data Replay', printDataPort);
 });
 
 midi.addEventListener('combinationDataReceived', (e) => {
   const data = e.detail;
-  const patchName = parsePatchName(data);
-  state.combiModeData.patchName = patchName;
-  patchnameDataPort.textContent = state.combiModeData.patchName;
+  const parsedPatchName = parsePatchName(data);
+  state.patchName = parsedPatchName;
+  patchnameDataPort.textContent = `${state.activeBank}${state.patchNumber}: ${state.patchName}`;
+  printMIDIData(data, 'Combi Data Replay', printDataPort);
 });
 
 /**
@@ -119,29 +129,36 @@ midi.addEventListener('patchCangedOnApp', (e) => {
 });
 
 midi.addEventListener('globalDumpReceived', (e) => {
-  console.log('global data received fired fired');
+  removeActiveStyle(scaleNotesBtns);
   const data = e.detail;
   globalDumpData = data;
-  // const { tuningAndPedals } = parseGlobalDump(globalDumpData);
-  // Object.values(tuningAndPedals).forEach((val, i) => {
-  //   if (i - 1 > -1 && val > 0) {
-  //     scaleNotesBtns.forEach((btn) => {
-  //       if (+btn.dataset.index === i - 1) {
-  //         btn.classList.add('active-btn');
-  //       }
-  //     });
-  //   }
-  // });
-  this.removeEventListener('globalDumpReceived', midi);
-});
+  const { tuningAndPedals } = parseGlobalDump(globalDumpData);
 
-midi.addEventListener('parameterChanged', (e) => {
-  // console.log('parameterChanged UI UPDATER');
-  // console.log(e.detail);
-});
+  const unStrippedPortion1 = tuningAndPedals.slice(0, 8);
+  const unStrippedPortion2 = tuningAndPedals.slice(8, 16);
+  readyTunningMessage1 = unStrippedPortion1;
+  readyTunningMessage2 = unStrippedPortion2;
 
-// const { tuningAndPedals } = parseGlobalDump([
-//   240, 66, 48, 43, 81, 0, 0, 0, 2, 0, 7, 7, 4, 0, 16, 0, 0, 0, 0, 78, 0, 0, 4,
-//   0, 0, 78, 0, 0, 3, 3, 247,
-// ]);
-// console.log(tuningAndPedals);
+  const firstPortionStripped = tuningAndPedals.slice(1, 8);
+  const secondPortionStriped = tuningAndPedals.slice(9);
+  tunningMessage1Temp = firstPortionStripped;
+  tunningMessage2Temp = secondPortionStriped;
+
+  firstPortionStripped.forEach((byte, i) => {
+    if (byte > 0) {
+      scaleNotesBtns.forEach((btn) => {
+        if (btn.dataset.id === 'firstPortion' && +btn.dataset.index === i)
+          btn.classList.add('active-btn');
+      });
+    }
+  });
+  secondPortionStriped.forEach((byte, i) => {
+    if (byte > 0) {
+      scaleNotesBtns.forEach((btn) => {
+        if (btn.dataset.id === 'secondPortion' && +btn.dataset.index === i)
+          btn.classList.add('active-btn');
+      });
+    }
+  });
+  printMIDIData(data, 'Global Dump Received', printDataPort);
+});
