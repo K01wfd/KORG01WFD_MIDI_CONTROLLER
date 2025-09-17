@@ -51,6 +51,8 @@ midi.addEventListener('connectorReady', () => {
    * depending on mode -> send current patch dump request
    */
   midi.sendMessage(requestModeMessage);
+  midi.changeBank(state.activeBank);
+  midi.changePatch(getConvertedPatchNum());
   /**
    * request current golbal data -> global data received -> emit -> uiUpdater respond
    */
@@ -280,19 +282,27 @@ changePatchButtons.forEach((btn) => {
 });
 
 prevPatchBtn.addEventListener('click', (_) => {
-  patchNumberCounter--; // NEED TO CONVERT TO UNSIGNED HEX -1 === 127
-  let counter = patchNumberCounter;
-  if (counter < 0) {
-    counter = toHex7bit(patchNumberCounter - 28);
+  state.patchNumber--;
+
+  if (state.patchNumber === -1) {
+    midi.changeBank(state.prevBank);
+    state.activeBank = state.prevBank;
+    state.prevBank = state.activeBank === 0 ? 1 : 0;
   }
-  midi.changePatch(counter);
+
+  midi.changePatch(getConvertedPatchNum());
   dispatchNewEvent('patchCangedOnApp', midi, state);
 });
 nextPatchBtn.addEventListener('click', (_) => {
-  patchNumberCounter++;
-  if (patchNumberCounter > 99) {
+  state.patchNumber++;
+
+  if (state.patchNumber === 100) {
+    midi.changeBank(state.prevBank);
+    state.activeBank = state.prevBank;
+    state.prevBank = state.activeBank === 0 ? 1 : 0;
   }
-  midi.changePatch(patchNumberCounter);
+
+  midi.changePatch(getConvertedPatchNum());
   dispatchNewEvent('patchCangedOnApp', midi, state);
 });
 

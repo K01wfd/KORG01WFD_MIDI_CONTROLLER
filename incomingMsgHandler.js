@@ -1,6 +1,7 @@
 midi.addEventListener('newMessage', (e) => {
   const data = e.detail;
   if (data[0] === 0xfe || data[0] === 0xf8) return;
+  console.log(data);
   // Channel
   switch (data[0]) {
     // response to bank change channel message
@@ -14,7 +15,7 @@ midi.addEventListener('newMessage', (e) => {
       break;
     }
     case 0xc0: {
-      console.log(data);
+      processPatchData(data);
       break;
     }
   }
@@ -58,8 +59,6 @@ midi.addEventListener('newMessage', (e) => {
       break;
     }
     default: {
-      console.log('Unkown message');
-      console.log(data);
       return;
     }
   }

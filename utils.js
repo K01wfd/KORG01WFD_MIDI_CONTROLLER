@@ -164,15 +164,6 @@ function delayedMessage(message, timer = 50) {
   setTimeout(() => midi.sendMessage(message), timer);
 }
 
-// Prevent zoom on double touch
-document.addEventListener(
-  'dblclick',
-  function (event) {
-    event.preventDefault();
-  },
-  { passive: false }
-);
-
 /**
  * Send delayed MIDI Message
  * @param {number[]} dump - dump to parse patch name from
@@ -200,15 +191,22 @@ function parsePatchName(dump) {
   }
   return str;
 }
-function saveState(name, state) {
-  localStorage.setItem(name, JSON.stringify(state));
+
+function displayPatchDetails(state) {
+  let patchNumber =
+    state.patchNumber < 0
+      ? +toHex7bit(state.patchNumber - 28)
+      : state.patchNumber;
+  return `${BANKS[state.activeBank]}${patchNumber}: ${state.patchName}`;
 }
-function loadState(name) {
-  const loadedState = JSON.parse(localStorage.getItem(name));
-  if (loadedState) {
-    Object.assign(state, loadedState);
-    return;
+
+function getConvertedPatchNum() {
+  if (state.patchNumber === -101) state.patchNumber = -1;
+  if (state.patchNumber === 100) state.patchNumber = 0;
+  if (state.patchNumber < 0) {
+    state.patchNumber = +toHex7bit(state.patchNumber - 28);
   }
+  return state.patchNumber;
 }
 const BANKS = {
   0: 'A',
@@ -219,25 +217,33 @@ const BANKS_NUMBERS = {
   B: 1,
 };
 
-function printMIDIData(data, title, dataPort) {
-  const dataContainer = document.createElement('div');
-  dataContainer.classList.add('data-container');
+// Prevent zoom on double touch
+document.addEventListener(
+  'dblclick',
+  function (event) {
+    event.preventDefault();
+  },
+  { passive: false }
+);
+// function printMIDIData(data, title, dataPort) {
+//   const dataContainer = document.createElement('div');
+//   dataContainer.classList.add('data-container');
 
-  const dataHeader = document.createElement('header');
-  dataHeader.classList.add('print-data-header');
+//   const dataHeader = document.createElement('header');
+//   dataHeader.classList.add('print-data-header');
 
-  const dataTitle = document.createElement('h3');
-  dataTitle.textContent = title;
+//   const dataTitle = document.createElement('h3');
+//   dataTitle.textContent = title;
 
-  const dateElement = document.createElement('span');
-  dateElement.textContent = new Date().toLocaleTimeString();
+//   const dateElement = document.createElement('span');
+//   dateElement.textContent = new Date().toLocaleTimeString();
 
-  dataHeader.append(...[dataTitle, dateElement]);
+//   dataHeader.append(...[dataTitle, dateElement]);
 
-  const dataText = data.join('-');
-  const dataElement = document.createElement('p');
-  dataElement.textContent = dataText;
+//   const dataText = data.join('-');
+//   const dataElement = document.createElement('p');
+//   dataElement.textContent = dataText;
 
-  dataContainer.append(...[dataHeader, dataText]);
-  dataPort.appendChild(dataContainer);
-}
+//   dataContainer.append(...[dataHeader, dataText]);
+//   dataPort.appendChild(dataContainer);
+// }

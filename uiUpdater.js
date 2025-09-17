@@ -57,6 +57,7 @@ midi.addEventListener('bankChangedOnKeybardStateUpdated', (e) => {
   const state = e.detail;
   if (state.activeBank === 0) toggleActiveButtons(bankAbtn, bankBbtn);
   else toggleActiveButtons(bankBbtn, bankAbtn);
+  displayPatchDetails(state);
 });
 
 /**
@@ -73,6 +74,7 @@ midi.addEventListener('bankChangedOnApp', (e) => {
   } else if (state.mode === 2) {
     midi.sendMessage(currProgRequest);
   }
+  if (state.activeBank === 0) toggleActiveButtons(bankAbtn, bankBbtn);
 });
 
 /**
@@ -85,28 +87,14 @@ midi.addEventListener('programDataReceived', (e) => {
   const data = e.detail;
   const parsedPatchName = parsePatchName(data);
   state.patchName = parsedPatchName;
-
-  // const newMap = [{ number: patchNumberCounter, name: parsedPatchName }];
-  // const prevProgPatchMap = JSON.parse(
-  //   localStorage.getItem('01wfdProgPatchesMap')
-  // );
-  // if (prevProgPatchMap) {
-  //   const extracted = [...prevProgPatchMap, ...newMap];
-  //   saveState('01wfdProgPatchesMap', extracted);
-  // } else {
-  //   saveState('01wfdProgPatchesMap', newMap);
-  // }
-
-  patchnameDataPort.textContent = `${state.activeBank}${state.patchNumber}: ${state.patchName}`;
-  printMIDIData(data, 'Program Data Replay', printDataPort);
+  patchnameDataPort.textContent = displayPatchDetails(state);
 });
 
 midi.addEventListener('combinationDataReceived', (e) => {
   const data = e.detail;
   const parsedPatchName = parsePatchName(data);
   state.patchName = parsedPatchName;
-  patchnameDataPort.textContent = `${state.activeBank}${state.patchNumber}: ${state.patchName}`;
-  printMIDIData(data, 'Combi Data Replay', printDataPort);
+  patchnameDataPort.textContent = displayPatchDetails(state);
 });
 
 /**
@@ -160,5 +148,4 @@ midi.addEventListener('globalDumpReceived', (e) => {
       });
     }
   });
-  printMIDIData(data, 'Global Dump Received', printDataPort);
 });

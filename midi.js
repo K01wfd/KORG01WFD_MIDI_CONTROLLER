@@ -55,7 +55,7 @@ class MIDIConnector extends EventTarget {
     this.#_output.send([0xb0 | channel, 0x00, 0x00]);
     // Send CC32 (LSB)
     this.#_output.send([0xb0 | channel, 0x20, bank]);
-    this.#_output.send([0xc0 | channel, 0x00]);
+    this.#_output.send([0xc0 | channel, getConvertedPatchNum()]);
   }
 }
 

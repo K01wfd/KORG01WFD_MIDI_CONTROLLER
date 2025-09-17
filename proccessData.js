@@ -15,3 +15,8 @@ function proccessModeData(data) {
 function processBankData(data) {
   state.activeBank = data[2];
 }
+
+function processPatchData(data) {
+  const pNumber = data[1];
+  state.patchNumber = pNumber;
+}
