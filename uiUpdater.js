@@ -6,9 +6,9 @@
  */
 midi.addEventListener('modeChangedOnApp', (e) => {
   const state = e.detail;
-  if (state.mode === 'COMBINATION') {
+  if (state.mode === 0) {
     toggleActiveButtons(modeCombiButton, modeProgButton);
-  } else {
+  } else if (state.mode === 2) {
     toggleActiveButtons(modeProgButton, modeCombiButton);
   }
   midi.sendMessage(requestModeMessage);
@@ -21,10 +21,10 @@ midi.addEventListener('modeChangedOnApp', (e) => {
  */
 midi.addEventListener('modeChangedOnKeybaordStateUpdated', (e) => {
   const state = e.detail;
-  if (state.mode === 'COMBINATION') {
+  if (state.mode === 0) {
     toggleActiveButtons(modeCombiButton, modeProgButton);
     midi.sendMessage(currCombiRequest);
-  } else {
+  } else if (state.mode === 2) {
     toggleActiveButtons(modeProgButton, modeCombiButton);
     midi.sendMessage(currProgRequest);
   }
@@ -39,10 +39,10 @@ midi.addEventListener('modeChangedOnKeybaordStateUpdated', (e) => {
  */
 midi.addEventListener('modeRequestStateUpdated', (e) => {
   const state = e.detail;
-  if (state.mode === 'COMBINATION') {
+  if (state.mode === 0) {
     toggleActiveButtons(modeCombiButton, modeProgButton);
     midi.sendMessage(currCombiRequest);
-  } else {
+  } else if (state.mode === 2) {
     toggleActiveButtons(modeProgButton, modeCombiButton);
     midi.sendMessage(currProgRequest);
   }
@@ -55,7 +55,7 @@ midi.addEventListener('modeRequestStateUpdated', (e) => {
  */
 midi.addEventListener('bankChangedOnKeybardStateUpdated', (e) => {
   const state = e.detail;
-  if (state.activeBank === 'A') toggleActiveButtons(bankAbtn, bankBbtn);
+  if (state.activeBank === 0) toggleActiveButtons(bankAbtn, bankBbtn);
   else toggleActiveButtons(bankBbtn, bankAbtn);
 });
 
@@ -68,9 +68,9 @@ midi.addEventListener('bankChangedOnKeybardStateUpdated', (e) => {
  */
 midi.addEventListener('bankChangedOnApp', (e) => {
   const state = e.detail;
-  if (state.mode === 'COMBINATION') {
+  if (state.mode === 0) {
     midi.sendMessage(currCombiRequest);
-  } else {
+  } else if (state.mode === 2) {
     midi.sendMessage(currProgRequest);
   }
 });
@@ -121,9 +121,9 @@ midi.addEventListener('combinationDataReceived', (e) => {
 midi.addEventListener('patchCangedOnApp', (e) => {
   const state = e.detail;
   const { mode } = state;
-  if (mode === 'PROGRAM') {
+  if (mode === 2) {
     midi.sendMessage(currProgRequest);
-  } else {
+  } else if (mode === 0) {
     midi.sendMessage(currCombiRequest);
   }
 });

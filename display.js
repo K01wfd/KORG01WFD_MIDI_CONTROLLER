@@ -59,27 +59,27 @@ midi.addEventListener('connectorReady', () => {
 
 // CHANGE MODE
 
-if (state.mode === 'PROGRAM') modeProgButton.classList.add('active-btn');
+if (state.mode === 2) modeProgButton.classList.add('active-btn');
 modeProgButton.addEventListener('click', (_) => {
   /**
    * mode change in app -> send message -> update state mode -> emit -> uiUpdater response -> send current mode request ->
    *  process replay data -> emit -> uiUpdater response
    */
-  midi.sendMessage(progModeMessage);
+  midi.sendMessage(switchToProgMessage);
   toggleActiveButtons(modeProgButton, modeCombiButton);
-  state.mode = 'PROGRAM';
+  state.mode = 2;
   dispatchNewEvent('modeChangedOnApp', midi, state);
 });
 
-if (state.mode === 'COMBINATION') modeCombiButton.classList.add('active-btn');
+if (state.mode === 0) modeCombiButton.classList.add('active-btn');
 modeCombiButton.addEventListener('click', (_) => {
   /**
    * mode change in app -> send message -> update state mode -> emit -> uiUpdater response -> send current mode request ->
    *  process replay data -> emit -> uiUpdater response
    */
-  midi.sendMessage(combiModeMessage);
+  midi.sendMessage(switchToCombiMessage);
   toggleActiveButtons(modeCombiButton, modeProgButton);
-  state.mode = 'COMBINATION';
+  state.mode = 0;
   dispatchNewEvent('modeChangedOnApp', midi, state);
 });
 
@@ -197,7 +197,7 @@ scaleNotesBtns.forEach((btn) => {
 });
 
 // Change banks
-if (state.activeBank === 'A') bankAbtn.classList.add('active-btn');
+if (state.activeBank === 0) bankAbtn.classList.add('active-btn');
 bankAbtn.addEventListener('click', (_) => {
   if (bankAbtn.classList.contains('active-btn')) return;
 
@@ -210,13 +210,12 @@ bankAbtn.addEventListener('click', (_) => {
    * send change bank
    * emit -> uiUpdater response
    */
-  const bankNumber = BANKS_NUMBERS[bankAbtn.value];
-  state.activeBank = bankAbtn.value;
-  midi.changeBank(bankNumber);
+  state.activeBank = +bankAbtn.value;
+  midi.changeBank(state.activeBank);
   dispatchNewEvent('bankChangedOnApp', midi, state);
 });
 
-if (state.activeBank === 'B') bankBbtn.classList.add('active-btn');
+if (state.activeBank === 1) bankBbtn.classList.add('active-btn');
 bankBbtn.addEventListener('click', (_) => {
   if (bankBbtn.classList.contains('active-btn')) return;
 
@@ -229,9 +228,8 @@ bankBbtn.addEventListener('click', (_) => {
    * send change bank
    * emit -> uiUpdater response
    */
-  const bankNumber = BANKS_NUMBERS[bankBbtn.value];
-  state.activeBank = bankBbtn.value;
-  midi.changeBank(bankNumber);
+  state.activeBank = +bankBbtn.value;
+  midi.changeBank(state.activeBank);
   dispatchNewEvent('bankChangedOnApp', midi, state);
 });
 
@@ -283,11 +281,17 @@ changePatchButtons.forEach((btn) => {
 
 prevPatchBtn.addEventListener('click', (_) => {
   patchNumberCounter--; // NEED TO CONVERT TO UNSIGNED HEX -1 === 127
-  midi.changePatch(patchNumberCounter);
+  let counter = patchNumberCounter;
+  if (counter < 0) {
+    counter = toHex7bit(patchNumberCounter - 28);
+  }
+  midi.changePatch(counter);
   dispatchNewEvent('patchCangedOnApp', midi, state);
 });
 nextPatchBtn.addEventListener('click', (_) => {
   patchNumberCounter++;
+  if (patchNumberCounter > 99) {
+  }
   midi.changePatch(patchNumberCounter);
   dispatchNewEvent('patchCangedOnApp', midi, state);
 });

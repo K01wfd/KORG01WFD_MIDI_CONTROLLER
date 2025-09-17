@@ -2,18 +2,16 @@ function proccessModeData(data) {
   const modeValue = data[5];
   switch (modeValue) {
     case 0x00: {
-      const mode = 'COMBINATION';
-      state.mode = mode;
+      state.mode = 0;
       break;
     }
     case 0x02: {
-      const mode = 'PROGRAM';
-      state.mode = mode;
+      state.mode = 2;
       break;
     }
   }
 }
 
 function processBankData(data) {
-  state.activeBank = BANKS[data[2]];
+  state.activeBank = data[2];
 }
