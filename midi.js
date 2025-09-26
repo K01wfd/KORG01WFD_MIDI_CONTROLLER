@@ -26,7 +26,7 @@ class MIDIConnector extends EventTarget {
 
       this.dispatchEvent(new CustomEvent('connectorReady'));
     } catch (error) {
-      alert('MIDI NOT SUPPORTED');
+      // alert('MIDI NOT SUPPORTED');
       console.log('Error accessing midi on this device 🚫');
     }
   }

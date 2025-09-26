@@ -8,82 +8,52 @@
   </head>
   <body>
     <main>
-      <div class="screen-1">
-        <!-- Display section -->
-        <div class="screen">
-          <!-- <div id="mode-data-port">Initial</div> -->
-          <!-- <div id="bank-data-port">Initial</div> -->
-          <div class="screen-patch-container">
-            <button id="previous-patch">&lt;&lt;&lt;</button>
-            <div id="patchname">Initial</div>
-            <button id="next-patch">&gt;&gt;&gt;</button>
-          </div>
-          <button id="show-number-padd">Num Pad</button>
+      <!-- Display section -->
+      <div class="screen">
+        <div class="screen-patch-container">
+          <button id="previous-patch">&lt;&lt;&lt;</button>
+          <div id="patchname">Initial</div>
+          <button id="next-patch">&gt;&gt;&gt;</button>
         </div>
+      </div>
 
-        <!-- Change mode & banks section -->
-        <div class="actions">
-          <div class="change-mode-buttons">
-            <button id="mode-combination">Combi</button>
-            <button id="mode-program">Prog</button>
-            <button id="request-global">Reset</button>
-          </div>
-          <div class="transpose-buttons">
-            <button id="transpose-minus">-</button>
-            <div id="transpose-value">0</div>
-            <button id="transpose-plus">+</button>
-          </div>
+      <!-- Change mode & banks section -->
+      <div class="actions">
+        <div class="change-mode-buttons">
+          <button id="mode-combination">Combi</button>
+          <button id="mode-program">Prog</button>
+          <button id="request-global">Reset</button>
+          <button id="tunner">Tunner</button>
         </div>
-        <!--  -->
         <div class="change-banks-buttons">
           <button id="bank-a-btn" value="0">Bank A</button>
           <button id="bank-b-btn" value="1">Bank B</button>
         </div>
-        <!--  -->
-        <div class="userscale">
-          <div class="userscale-top">
-            <div class="userscale-top-left">
-              <button data-index="1" data-id="firstPortion">C#</button>
-              <button data-index="3" data-id="firstPortion">D#</button>
-            </div>
-            <div class="userscale-top-right">
-              <button data-index="6" data-id="firstPortion">F#</button>
-              <button data-index="1" data-id="secondPortion">G#</button>
-              <button data-index="3" data-id="secondPortion">A#</button>
-            </div>
-          </div>
-          <div class="userscale-bottom">
-            <button data-index="0" data-id="firstPortion">C</button>
-            <button data-index="2" data-id="firstPortion">D</button>
-            <button data-index="4" data-id="firstPortion">E</button>
-            <button data-index="5" data-id="firstPortion">F</button>
-            <button data-index="0" data-id="secondPortion">G</button>
-            <button data-index="2" data-id="secondPortion">A</button>
-            <button data-index="4" data-id="secondPortion">B</button>
-          </div>
+      </div>
+      <!--  -->
+
+      <!--  -->
+      <div class="change-patch-buttons">
+        <div class="row">
+          <button value="7">7</button>
+          <button value="8">8</button>
+          <button value="9">9</button>
         </div>
-        <!--  -->
-        <div class="change-patch-buttons" style="display: none">
-          <div class="row">
-            <button value="7">7</button>
-            <button value="8">8</button>
-            <button value="9">9</button>
-          </div>
-          <div class="row">
-            <button value="4">4</button>
-            <button value="5">5</button>
-            <button value="6">6</button>
-          </div>
-          <div class="row">
-            <button value="1">1</button>
-            <button value="2">2</button>
-            <button value="3">3</button>
-          </div>
-          <div class="row">
-            <button value="0">0</button>
-          </div>
+        <div class="row">
+          <button value="4">4</button>
+          <button value="5">5</button>
+          <button value="6">6</button>
+        </div>
+        <div class="row">
+          <button value="1">1</button>
+          <button value="2">2</button>
+          <button value="3">3</button>
+        </div>
+        <div class="row">
+          <button value="0">0</button>
         </div>
       </div>
+
       <div class="data-print-port"></div>
     </main>
     <script src="utils.js"></script>

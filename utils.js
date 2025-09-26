@@ -106,7 +106,8 @@ function injectTransposeArray(array) {
   const dumpHead = globalDumpData.slice(0, 6);
   const dumpTail = globalDumpData.slice(14);
   const newDump = [...dumpHead, ...array, ...dumpTail];
-  return newDump;
+  globalDumpData = newDump;
+  return globalDumpData;
 }
 
 /**
@@ -139,6 +140,7 @@ function constructTransposDump(transposeValue) {
   transposeMessageTemp[1] = transposeValue;
   const readyTransposeBlock = encode7bitTo8(transposeMessageTemp);
   const readyDump = injectTransposeArray(readyTransposeBlock);
+
   return readyDump;
 }
 
@@ -170,15 +172,9 @@ function delayedMessage(message, timer = 50) {
  * @returns {string} str - the parsed Patch name
  */
 function parsePatchName(dump) {
-  const LOWER = Array.from({ length: 26 }, (_, i) =>
-    String.fromCharCode(i + 97)
-  );
-  const UPPER = Array.from({ length: 26 }, (_, i) =>
-    String.fromCharCode(i + 65)
-  );
-  const SYMBOLS = Array.from({ length: 32 }, (_, i) =>
-    String.fromCharCode(i + 32)
-  );
+  const LOWER = Array.from({ length: 26 }, (_, i) => String.fromCharCode(i + 97));
+  const UPPER = Array.from({ length: 26 }, (_, i) => String.fromCharCode(i + 65));
+  const SYMBOLS = Array.from({ length: 32 }, (_, i) => String.fromCharCode(i + 32));
 
   const characters = [...UPPER, ...LOWER, ...SYMBOLS];
 
@@ -193,10 +189,7 @@ function parsePatchName(dump) {
 }
 
 function displayPatchDetails(state) {
-  let patchNumber =
-    state.patchNumber < 0
-      ? +toHex7bit(state.patchNumber - 28)
-      : state.patchNumber;
+  let patchNumber = state.patchNumber < 0 ? +toHex7bit(state.patchNumber - 28) : state.patchNumber;
   return `${BANKS[state.activeBank]}${patchNumber}: ${state.patchName}`;
 }
 

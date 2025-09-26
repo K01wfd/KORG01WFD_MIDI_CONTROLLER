@@ -10,8 +10,8 @@ html {
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
   font-size: 1.6rem;
   min-height: 100dvh;
   background-color: #121212;
@@ -35,20 +35,18 @@ button {
 }
 .screen {
   color: #121212;
-  min-height: 15dvh;
-  background-color: #dc8f00;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
   padding: 1rem;
   font-weight: 500;
-  div:last-of-type {
-    background-color: #fff;
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.9rem;
-    font-weight: 600;
-  }
+}
+.screen div:last-of-type {
+  background-color: #fff;
+  padding: 1rem;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 600;
 }
 .screen-patch-container {
   display: flex;
@@ -57,11 +55,15 @@ button {
 }
 /*  */
 .actions {
-  padding: 1.5rem;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1.5rem 0;
+  margin-bottom: 1.5rem;
+}
+.actions button {
+  font-size: 2.5rem;
+  padding: 1.2rem 2rem;
 }
 .change-mode-buttons {
   display: flex;
@@ -80,40 +82,9 @@ button {
   align-items: center;
   gap: 2rem;
   padding: 1.5rem;
-  margin-bottom: 2rem;
 }
 
 /*  */
-
-.userscale {
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 1.5rem;
-  button {
-    font-size: 2.5rem;
-  }
-}
-.userscale-top {
-  display: flex;
-  gap: 4rem;
-}
-.userscale-top-left,
-.userscale-top-right {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-.userscale-bottom {
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
-  button {
-    padding: 1rem 1.6rem;
-  }
-}
 
 /*  */
 
@@ -123,22 +94,15 @@ button {
   align-items: center;
   flex-direction: column;
   gap: 1rem;
-  position: absolute;
-  left: 50%;
-  top: 61%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 1rem 8rem rgba(0, 0, 0, 1);
-  background-color: #121212;
-  z-index: 1000;
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  button {
-    font-size: 3.2rem;
-    padding: 4rem 5.5rem;
-  }
+}
+.change-patch-buttons .row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.change-patch-buttons button {
+  font-size: 3.2rem;
+  padding: 3.5rem 4.9rem;
 }
 /*  */
 .active-btn {
@@ -150,29 +114,4 @@ button {
   outline: 1px solid #edc500;
   box-shadow: 0 0 2rem 1rem #edc500;
   outline-offset: 0.5rem;
-}
-.show-flex {
-  display: flex;
-}
-
-.data-print-port {
-  max-height: 35dvh;
-  overflow-y: auto;
-  background-color: #eee;
-}
-
-.data-container {
-  padding: 1rem;
-  margin-bottom: 1.3rem;
-  color: #121212;
-}
-.print-data-header {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  span {
-    padding: 0.3rem;
-    background-color: #aaa;
-    border-radius: 0.2rem;
-  }
 }
